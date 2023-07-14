@@ -21,7 +21,7 @@ public class SimpleJDBCRepository {
     private Statement st = null;
 
     private static final String CREATE_USER_SQL = "INSERT INTO myusers (firstname, lastname, age) VALUES (?, ?, ?);";
-    private static final String UPDATE_USER_SQL = "UPDATE myusers UPDATE firstname= ? , lastname = ?, age = ? WHERE id = ?;";
+    private static final String UPDATE_USER_SQL = "UPDATE myusers SET firstname= ? , lastname = ?, age = ? WHERE id = ?;";
     private static final String DELETE_USER = "DELETE FROM myusers WHERE id = ?;";
     private static final String FIND_USER_BY_ID_SQL = " SELECT * FROM myusers WHERE id = ?;";
     private static final String FIND_USER_BY_NAME_SQL = "SELECT * FROM myusers WHERE firstname = ?;";
