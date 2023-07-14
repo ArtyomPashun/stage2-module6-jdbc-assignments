@@ -20,7 +20,7 @@ public class SimpleJDBCRepository {
     private PreparedStatement ps = null;
     private Statement st = null;
 
-    private static final String CREATE_USER_SQL = "INSERT INTO myusers (id, firstname, lastname, age) VALUES (?, ?, ?, ?);";
+    private static final String CREATE_USER_SQL = "INSERT INTO myusers (firstname, lastname, age) VALUES (?, ?, ?, ?);";
     private static final String UPDATE_USER_SQL = "UPDATE myusers UPDATE firstname= ? , lastname = ?, age = ? WHERE id = ?;";
     private static final String DELETE_USER = "DELETE FROM myusers WHERE id = ?;";
     private static final String FIND_USER_BY_ID_SQL = " SELECT * FROM myusers WHERE id = ?;";
@@ -32,10 +32,9 @@ public class SimpleJDBCRepository {
         try {
             connection = CustomDataSource.getInstance().getConnection();
             ps = connection.prepareStatement(CREATE_USER_SQL);
-            ps.setLong(1, user.getId());
-            ps.setString(2, user.getFirstName());
-            ps.setString(3, user.getLastName());
-            ps.setInt(4, user.getAge());
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setInt(3, user.getAge());
             rowCount = ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -103,10 +102,10 @@ public class SimpleJDBCRepository {
         try {
             connection = CustomDataSource.getInstance().getConnection();
             ps = connection.prepareStatement(UPDATE_USER_SQL);
-            ps.setLong(1, user.getId());
-            ps.setString(2, user.getFirstName());
-            ps.setString(3, user.getLastName());
-            ps.setInt(4, user.getAge());
+            ps.setString(1, user.getFirstName());
+            ps.setString(2, user.getLastName());
+            ps.setInt(3, user.getAge());
+            ps.setLong(4, user.getId());
             ps.executeUpdate();
             return findUserById(user.getId());
         } catch (SQLException e) {
