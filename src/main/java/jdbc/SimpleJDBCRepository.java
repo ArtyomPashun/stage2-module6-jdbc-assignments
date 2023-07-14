@@ -36,14 +36,14 @@ public class SimpleJDBCRepository {
     private static final String findUserByNameSQL = "SELECT * FROM myusers WHERE firstname = ?;";
     private static final String findAllUserSQL = "SELECT * FROM myusers;";
 
-    public Long createUser(long id, String firstName, String lastName, int age) {
+    public Long createUser(User user) {
         long rowCount = 0;
         try {
             ps = connection.prepareStatement(createUserSQL);
-            ps.setLong(1, id);
-            ps.setString(2, firstName);
-            ps.setString(3, lastName);
-            ps.setInt(4, age);
+            ps.setLong(1, user.getId());
+            ps.setString(2, user.getFirstName());
+            ps.setString(3, user.getLastName());
+            ps.setInt(4, user.getAge());
             rowCount = ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -105,18 +105,14 @@ public class SimpleJDBCRepository {
         return userList;
     }
 
-    public User updateUser(long id, String firstName, String lastName, int age) {
-        User user = null;
+    public User updateUser(User user) {
         try {
             ps = connection.prepareStatement(updateUserSQL);
-            ps.setLong(1, id);
-            ps.setString(2, firstName);
-            ps.setString(3, lastName);
-            ps.setInt(4, age);
+            ps.setLong(1, user.getId());
+            ps.setString(2, user.getFirstName());
+            ps.setString(3, user.getLastName());
+            ps.setInt(4, user.getAge());
             ps.executeUpdate();
-            ResultSet resultSet = ps.executeQuery();
-
-            user = new User(id, firstName, lastName, age);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
